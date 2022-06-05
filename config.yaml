@@ -1,0 +1,36 @@
+category_regex_rules:
+  groceries:
+    - 'H-E-B #'
+    - 99 RANCH
+  administrative:
+    - Amazon Prime
+    - LEMONADE
+  amazon:
+    - AMZN Mktp
+  discretionary:
+    - SIGNAL FOUNDATION SIGNAL.ORG
+  transportation:
+    - UBER
+    - SHELL OIL
+    - H-E-B GAS
+  eating out:
+    - 'TST\*'
+    - 'SQ \*'
+    - TORCHYS MUELLER
+  inflows:
+    - DEPOSIT ACH AKUNA INVESTMENT
+    - Bank of America DES:CASHREWARD
+    - DEPOSIT DIVIDEND
+    - Interest Earned
+  transfers to non-cash accounts:
+    - SCHWAB BROKERAGE DES:MONEYLINK
+    - 'WITHDRAWAL ACH TYPE: TRANSFER ID: LENDINGCLUB BANK'
+  discard:
+    - Beginning balance
+    - ALLIANT CU DES:XFER
+    - CHASE CREDIT CRD DES:EPAY
+    - Bank of America Credit Card Bill Payment
+    - 'WITHDRAWAL ACH TYPE: TRANSFER ID: BANK OF AMERICA'
+    - Payment Thank You
+    - PAYMENT - THANK YOU
+

@@ -29,28 +29,33 @@ for file_name in os.listdir(desktop_path):
         if file_name[:5] == "venmo":
             # venmo statement
             df = pd.read_csv(file_path, skiprows=2)
+            df["Source"] = "Venmo"
             START_VENMO_BALANCE = df["Beginning Balance"].unique()[0]
             END_VENMO_BALANCE = df["Ending Balance"].unique()[-1]
         elif file_name == "stmt.csv":
-            # checking acct statement
+            # bofa checking acct statement
             df = pd.read_csv(file_path, skiprows=6)
+            df["Source"] = "BofA Checking"
             df.drop(columns=["Running Bal."], inplace=True)
             dfs.append(df)
         elif file_name[:5] == "Chase":
             # chase cc statement
             df = pd.read_csv(file_path)
+            df["Source"] = "Chase CC"
             df.drop(columns=["Post Date", "Category", "Type", "Memo"], inplace=True)
             df.rename(columns={"Transaction Date": "Date"}, inplace=True)
             dfs.append(df)
         elif file_name[:7] == "History":
             # alliant savings statement
             df = pd.read_csv(file_path)
+            df["Source"] = "Alliant Savings"
             df.drop(columns=["Balance"], inplace=True)
             # df["Date"] = df["Date"].apply(lambda s: dt.datetime.strptime(s, "%M/%d/%Y").date())
             dfs.append(df)
         else:
             # bofa cc statement
             df = pd.read_csv(file_path)
+            df["Source"] = "BofA CC"
             df.drop(columns=["Reference Number", "Address"], inplace=True)
             df.rename(columns={"Posted Date": "Date", "Payee": "Description"}, inplace=True)
             dfs.append(df)
@@ -78,7 +83,10 @@ def categorize(description: str) -> str:
     return "uncategorized"
         
 all_transactions["Category"] = all_transactions["Description"].apply(lambda d: categorize(d))
-all_transactions.sort_values(by=["Category", "Description"], inplace=True)
+
+# reorder columns and sort
+all_transactions = all_transactions[["Date", "Description", "Amount", "Category", "Source"]]
+all_transactions.sort_values(by=["Category", "Description"], inplace=True, ignore_index=True)
 
 # write output to csv
 output_path = os.path.join(desktop_path, "output.csv")
